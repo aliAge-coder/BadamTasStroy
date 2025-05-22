@@ -3,651 +3,501 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бадам Тас Строй | Құрылыс жобаларын басқару</title>
+    <title>Бадам Тас Строй | Құрылыс компаниясы</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="website icon" type="png" href="icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
         
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f8fafc;
+            scroll-behavior: smooth;
         }
         
-        .navbar {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
             background-size: cover;
             background-position: center;
         }
         
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #f59e0b;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
         .project-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
             transition: all 0.3s ease;
         }
         
-        .progress-bar {
-            height: 8px;
-            border-radius: 4px;
-            background-color: #e2e8f0;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
         }
         
-        .progress-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.5s ease;
+        .animate-bounce {
+            animation: bounce 2s infinite;
         }
         
-        .stat-card {
-            transition: all 0.3s ease;
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
         
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        .floating {
+            animation: floating 3s ease-in-out infinite;
         }
         
-        .construction-icon {
-            color: #f59e0b;
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Top Navigation -->
-    <nav class="navbar bg-white py-4 px-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center">
-                    <i class="fas fa-building text-white text-xl"></i>
+    <!-- Header -->
+    <header class="fixed w-full bg-white shadow-md z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="h-12 w-12 mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" class="h-full w-full">
+                        <rect width="100" height="100" rx="20" fill="#f59e0b"/>
+                        <path d="M20 70 V40 L50 20 L80 40 V70 H60 V50 H40 V70 H20 Z" fill="white"/>
+                        <text x="50%" y="88%" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold">BTS</text>
+                    </svg>
                 </div>
-                <span class="text-2xl font-bold text-gray-800">Бадам Тас Строй</span>
+                <h1 class="text-xl font-bold text-gray-800">Бадам Тас Строй</h1>
             </div>
-            
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#" class="text-orange-600 font-medium">Басты бет</a>
-                <a href="#" class="text-gray-600 hover:text-orange-600">Жобалар</a>
-                <a href="#" class="text-gray-600 hover:text-orange-600">Қызметтер</a>
-                <a href="#" class="text-gray-600 hover:text-orange-600">Компания</a>
-                <a href="#" class="text-gray-600 hover:text-orange-600">Байланыс</a>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <button class="md:hidden text-gray-600">
-                    <i class="fas fa-bars text-xl"></i>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-gray-700 hover:text-amber-500">Басты бет</a>
+                <a href="#about" class="nav-link text-gray-700 hover:text-amber-500">Компания туралы</a>
+                <a href="#services" class="nav-link text-gray-700 hover:text-amber-500">Қызметтер</a>
+                <a href="#projects" class="nav-link text-gray-700 hover:text-amber-500">Жобалар</a>
+                <a href="#contact" class="nav-link text-gray-700 hover:text-amber-500">Байланыс</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
                 </button>
-                <div class="relative">
-                    <button class="text-gray-600 hover:text-orange-600">
-                        <i class="fas fa-bell text-xl"></i>
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
-                    </button>
-                </div>
-                <div class="hidden md:block">
-                    <button class="flex items-center space-x-2">
-                        <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
-                            <i class="fas fa-user text-orange-600"></i>
-                        </div>
-                        <span class="font-medium">Али Бердімұратов</span>
-                    </button>
-                </div>
             </div>
         </div>
-    </nav>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 px-4 shadow-lg">
+            <a href="#home" class="block py-2 text-gray-700 hover:text-amber-500">Басты бет</a>
+            <a href="#about" class="block py-2 text-gray-700 hover:text-amber-500">Компания туралы</a>
+            <a href="#services" class="block py-2 text-gray-700 hover:text-amber-500">Қызметтер</a>
+            <a href="#projects" class="block py-2 text-gray-700 hover:text-amber-500">Жобалар</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-amber-500">Байланыс</a>
+        </div>
+    </header>
 
     <!-- Hero Section -->
-    <div class="hero-section text-white py-16">
-        <div class="container mx-auto px-6">
-            <div class="max-w-2xl">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Құрылыс жобаларын басқару жүйесі</h1>
-                <p class="text-xl mb-8">"Бадам Тас Строй" компаниясының барлық жобалары мен ресурстары бір жерде</p>
-                <div class="flex space-x-4">
-                    <button class="bg-orange-600 hover:bg-orange-700 px-6 py-3 rounded-lg font-medium">Жаңа жоба қосу</button>
-                    <button class="bg-white text-gray-800 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium">Толығырақ</button>
-                </div>
+    <section id="home" class="hero pt-24 pb-32 text-white flex items-center">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-bounce">Бадам Тас Строй</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Қазақстандағы сенімді құрылыс компаниясы</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#contact" class="btn-primary bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-lg">Байланыс</a>
+                <a href="#projects" class="btn-primary bg-transparent hover:bg-white hover:text-gray-800 border-2 border-white text-white font-bold py-3 px-6 rounded-lg">Жобалар</a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Dashboard Content -->
-    <div class="container mx-auto px-6 py-12">
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div class="stat-card bg-white rounded-xl shadow-sm p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-500">Барлық жобалар</p>
-                        <h3 class="text-2xl font-bold text-gray-800 mt-1">14</h3>
-                    </div>
-                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                        <i class="fas fa-project-diagram text-blue-600 text-xl"></i>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <span class="text-sm text-green-500 font-medium">
-                        <i class="fas fa-arrow-up mr-1"></i> 2 жаңа
-                    </span>
-                    <span class="text-sm text-gray-500 ml-2">соңғы 7 күнде</span>
-                </div>
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Компания туралы</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
             </div>
-            
-            <div class="stat-card bg-white rounded-xl shadow-sm p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-500">Жұмыс істеп тұрған</p>
-                        <h3 class="text-2xl font-bold text-gray-800 mt-1">8</h3>
-                    </div>
-                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-                        <i class="fas fa-hard-hat text-green-600 text-xl construction-icon"></i>
-                    </div>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Бадам Тас Строй командасы" class="rounded-lg shadow-xl w-full">
                 </div>
-                <div class="mt-4">
-                    <span class="text-sm text-blue-500 font-medium">
-                        <i class="fas fa-arrow-up mr-1"></i> 1 жоба
-                    </span>
-                    <span class="text-sm text-gray-500 ml-2">басталды</span>
-                </div>
-            </div>
-            
-            <div class="stat-card bg-white rounded-xl shadow-sm p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-500">Аяқталған</p>
-                        <h3 class="text-2xl font-bold text-gray-800 mt-1">4</h3>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Біз туралы</h3>
+                    <p class="text-gray-600 mb-4">Бадам Тас Строй - 2010 жылдан бері құрылыс саласында сенімді қызмет көрсетіп келе жатқан компания. Біздің мақсатымыз - клиенттерімізге жоғары сапалы құрылыс жұмыстарын ұсыну.</p>
+                    <p class="text-gray-600 mb-6">Компаниямызда 100-ден астам білікті мамандар жұмыс істейді. Біз өз жобаларымызда заманауи технологияларды қолданамыз және халықаралық стандарттарға сәйкес жұмыс істейміз.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <div class="text-amber-500 text-2xl mb-2">
+                                <i class="fas fa-hard-hat"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800">10+ жыл</h4>
+                            <p class="text-gray-600 text-sm">Тәжірибе</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <div class="text-amber-500 text-2xl mb-2">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800">50+ жоба</h4>
+                            <p class="text-gray-600 text-sm">Аяқталды</p>
+                        </div>
                     </div>
-                    <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
-                        <i class="fas fa-check-circle text-purple-600 text-xl"></i>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <span class="text-sm text-yellow-500 font-medium">
-                        <i class="fas fa-clock mr-1"></i> 1 жоба
-                    </span>
-                    <span class="text-sm text-gray-500 ml-2">күтуде</span>
-                </div>
-            </div>
-            
-            <div class="stat-card bg-white rounded-xl shadow-sm p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-500">Жалпы бюджет</p>
-                        <h3 class="text-2xl font-bold text-gray-800 mt-1">₸ 245.6М</h3>
-                    </div>
-                    <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
-                        <i class="fas fa-wallet text-yellow-600 text-xl"></i>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <span class="text-sm text-red-500 font-medium">
-                        <i class="fas fa-arrow-down mr-1"></i> 5.2%
-                    </span>
-                    <span class="text-sm text-gray-500 ml-2">өткен аймен салыстырғанда</span>
                 </div>
             </div>
         </div>
-        
-        <!-- Projects Section -->
-        <div class="mb-12">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-bold text-gray-800">Активті құрылыс жобалары</h2>
-                <a href="#" class="text-orange-600 hover:text-orange-800 font-medium flex items-center">
-                    Барлығын көру <i class="fas fa-chevron-right ml-2 text-sm"></i>
-                </a>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Қызметтер</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Project 1 -->
-                <div class="project-card bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                             alt="Алматы Тауы ТЖ" class="w-full h-full object-cover">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-amber-500 text-4xl mb-4">
+                        <i class="fas fa-building"></i>
                     </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <h3 class="text-xl font-bold text-gray-800">"Алматы Тауы" ТЖ</h3>
-                                <p class="text-gray-600">Алматы қаласы</p>
-                            </div>
-                            <span class="bg-blue-100 text-blue-600 text-xs font-semibold px-2 py-1 rounded-full">Жаңа</span>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Тұрғын үй құрылысы</h3>
+                    <p class="text-gray-600">Біз көпқабатты тұрғын үйлердің құрылысын жоғары сапалы материалдармен және заманауи технологияларды қолданып жүргіземіз.</p>
+                </div>
+                <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-amber-500 text-4xl mb-4">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Өнеркәсіптік құрылыс</h3>
+                    <p class="text-gray-600">Өнеркәсіптік кешендердің, цехтардың және өндіріс орындарының құрылысын жүргіземіз.</p>
+                </div>
+                <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-amber-500 text-4xl mb-4">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Жол құрылысы</h3>
+                    <p class="text-gray-600">Қалалық және ауылдық жолдардың құрылысын, сондай-ақ автомагистральдардың салынысын жүргіземіз.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Жобаларымыз</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="project-card rounded-lg overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Жоба 1" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Астана Тұрғын үй кешені</h3>
+                        <p class="text-gray-600 mb-3">Астана қаласындағы 12 қабатты тұрғын үй кешенінің құрылысы</p>
+                        <a href="#" class="text-amber-500 font-medium hover:text-amber-600">Толығырақ <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+                <div class="project-card rounded-lg overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Жоба 2" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Алматы Бизнес орталығы</h3>
+                        <p class="text-gray-600 mb-3">Алматы қаласындағы 20 қабатты бизнес орталығының құрылысы</p>
+                        <a href="#" class="text-amber-500 font-medium hover:text-amber-600">Толығырақ <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+                <div class="project-card rounded-lg overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Жоба 3" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Шымкент Автомагистраль</h3>
+                        <p class="text-gray-600 mb-3">Шымкент қаласындағы 15 км автомагистральдың салынысы</p>
+                        <a href="#" class="text-amber-500 font-medium hover:text-amber-600">Толығырақ <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="#" class="btn-primary inline-block bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-lg">Барлық жобалар</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Клиенттер пікірі</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-xl mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
-                        
+                    </div>
+                    <p class="text-gray-600 mb-4">"Бадам Тас Строй компаниясымен жұмыс істегеніме өте қуаныштымын. Жоба уақытында аяқталды және барлық стандарттар сақталды."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Клиент" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Асқар Жұмабаев</h4>
+                            <p class="text-gray-500 text-sm">Астана ЖШС директоры</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-xl mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Біздің бизнес орталығымыздың құрылысын өте сапалы орындады. Команда кәсіби және жоғары деңгейдегі қызмет көрсетті."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Клиент" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Айгүл Нұрланова</h4>
+                            <p class="text-gray-500 text-sm">Алматы Бизнес Орталығы</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-xl mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Автомагистраль жобасын уақытылы және бюджет шегінде аяқтады. Жолдың сапасы өте жоғары, 2 жылдан бері ешқандай проблемалар жоқ."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Клиент" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Берик Төлегенов</h4>
+                            <p class="text-gray-500 text-sm">Шымкент Әкімдігі</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Байланыс</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Бізбен байланысыңыз</h3>
+                    <p class="text-gray-600 mb-6">Кез келген сұрақтар бойынша бізге хабарласыңыз. Біз сізге жақын арада жауап береміз.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="text-amber-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Мекен-жайы</h4>
+                                <p class="text-gray-600">Шымкент қ., Алтынқорған көш., 12</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-amber-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Телефон</h4>
+                                <p class="text-gray-600">+7 (707) 532 69 51</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-amber-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Электронды пошта</h4>
+                                <p class="text-gray-600">info@bdamtas.kz</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="font-semibold text-gray-800 mb-3">Әлеуметтік желілердегі парақшаларымыз</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-600 hover:text-amber-500 text-2xl"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-amber-500 text-2xl"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-amber-500 text-2xl"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-amber-500 text-2xl"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <form id="contact-form" class="bg-gray-100 p-6 rounded-lg">
                         <div class="mb-4">
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="font-medium text-gray-600">Орындалуы</span>
-                                <span class="font-bold text-blue-600">35%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill bg-blue-500" style="width: 35%"></div>
-                            </div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Аты-жөніңіз</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
                         </div>
-                        
-                        <div class="flex justify-between items-center">
-                            <div class="flex -space-x-2">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/12.jpg" alt="">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/45.jpg" alt="">
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold">+5</div>
-                            </div>
-                            <button class="text-orange-600 hover:text-orange-800 text-sm font-medium">
-                                Толығырақ <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 2 -->
-                <div class="project-card bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                             alt="Бақыт ТЖ" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <h3 class="text-xl font-bold text-gray-800">"Бақыт" ТЖ</h3>
-                                <p class="text-gray-600">Нұр-Сұлтан қаласы</p>
-                            </div>
-                            <span class="bg-green-100 text-green-600 text-xs font-semibold px-2 py-1 rounded-full">Приоритетті</span>
-                        </div>
-                        
                         <div class="mb-4">
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="font-medium text-gray-600">Орындалуы</span>
-                                <span class="font-bold text-green-600">68%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill bg-green-500" style="width: 68%"></div>
-                            </div>
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Электронды пошта</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
                         </div>
-                        
-                        <div class="flex justify-between items-center">
-                            <div class="flex -space-x-2">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/32.jpg" alt="">
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold">+8</div>
-                            </div>
-                            <button class="text-orange-600 hover:text-orange-800 text-sm font-medium">
-                                Толығырақ <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 3 -->
-                <div class="project-card bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" 
-                             alt="Шұғыла ТЖ" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <h3 class="text-xl font-bold text-gray-800">"Шұғыла" ТЖ</h3>
-                                <p class="text-gray-600">Шымкент қаласы</p>
-                            </div>
-                            <span class="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">Критикалық</span>
-                        </div>
-                        
                         <div class="mb-4">
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="font-medium text-gray-600">Орындалуы</span>
-                                <span class="font-bold text-red-600">42%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill bg-red-500" style="width: 42%"></div>
-                            </div>
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Телефон нөмірі</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
                         </div>
-                        
-                        <div class="flex justify-between items-center">
-                            <div class="flex -space-x-2">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/65.jpg" alt="">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/78.jpg" alt="">
-                                <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/45.jpg" alt="">
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold">+3</div>
-                            </div>
-                            <button class="text-orange-600 hover:text-orange-800 text-sm font-medium">
-                                Толығырақ <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                            </button>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Хабарлама</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
                         </div>
-                    </div>
+                        <button type="submit" class="btn-primary w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-lg">Хабарлама жіберу</button>
+                    </form>
                 </div>
             </div>
         </div>
-        
-        <!-- Charts and Resources -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            <!-- Budget Chart -->
-            <div class="bg-white rounded-xl shadow-sm p-6 lg:col-span-2">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl font-bold text-gray-800">Жобалар бюджеті</h2>
-                    <div class="flex space-x-2">
-                        <button class="px-3 py-1 text-sm bg-orange-100 text-orange-600 rounded-lg">Ай</button>
-                        <button class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-lg">Тоқсан</button>
-                        <button class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-lg">Жыл</button>
-                    </div>
-                </div>
-                
-                <div class="h-64">
-                    <canvas id="budgetChart"></canvas>
-                </div>
-            </div>
-            
-            <!-- Resources Summary -->
-            <div class="bg-white rounded-xl shadow-sm p-6">
-                <h2 class="text-xl font-bold text-gray-800 mb-6">Ресурстардың қолжетімділігі</h2>
-                
-                <div class="space-y-4">
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center space-x-2">
-                                <i class="fas fa-users text-blue-500"></i>
-                                <h3 class="font-medium text-gray-800">Қызметкерлер</h3>
-                            </div>
-                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">45 адам</span>
-                        </div>
-                        
-                        <div class="space-y-2">
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-600">Құрылысшылар</span>
-                                    <span class="font-medium">28</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill bg-blue-500" style="width: 62%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-600">Инженерлер</span>
-                                    <span class="font-medium">8</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill bg-green-500" style="width: 18%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center space-x-2">
-                                <i class="fas fa-truck text-orange-500"></i>
-                                <h3 class="font-medium text-gray-800">Техникалар</h3>
-                            </div>
-                            <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">23 бірлік</span>
-                        </div>
-                        
-                        <div class="space-y-2">
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-600">Экскаваторлар</span>
-                                    <span class="font-medium">5</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill bg-orange-500" style="width: 22%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-600">Жүк көліктері</span>
-                                    <span class="font-medium">10</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill bg-yellow-500" style="width: 43%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center space-x-2">
-                                <i class="fas fa-boxes text-purple-500"></i>
-                                <h3 class="font-medium text-gray-800">Материалдар</h3>
-                            </div>
-                            <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">12 түр</span>
-                        </div>
-                        
-                        <div class="space-y-2">
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-600">Бетон</span>
-                                    <span class="font-medium">85%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill bg-gray-500" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-600">Болат</span>
-                                    <span class="font-medium">62%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill bg-blue-500" style="width: 62%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Recent Activity -->
-        <div class="bg-white rounded-xl shadow-sm p-6 mb-12">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-bold text-gray-800">Соңғы әрекеттер</h2>
-                <a href="#" class="text-orange-600 hover:text-orange-800 font-medium flex items-center">
-                    Барлығын көру <i class="fas fa-chevron-right ml-2 text-sm"></i>
-                </a>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center space-x-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                            <i class="fas fa-file-invoice"></i>
-                        </div>
-                        <div>
-                            <p class="font-medium">Шот-фактура</p>
-                            <p class="text-xs text-gray-500">№INV-2023-056</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-2">"Алматы Тауы" жобасына, ₸ 4,250,000</p>
-                    <p class="text-xs text-gray-400">2 сағат бұрын</p>
-                </div>
-                
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center space-x-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div>
-                            <p class="font-medium">Тапсырма</p>
-                            <p class="text-xs text-gray-500">№TASK-045</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-2">"Бақыт" жобасында негізгі құрылыс жұмыстары</p>
-                    <p class="text-xs text-gray-400">Кеше, 16:45</p>
-                </div>
-                
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center space-x-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div>
-                            <p class="font-medium">Ескерту</p>
-                            <p class="text-xs text-gray-500">Материалдар</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-2">"Шұғыла" жобасында материалдар жетіспеді</p>
-                    <p class="text-xs text-gray-400">Кеше, 10:30</p>
-                </div>
-                
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center space-x-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <div>
-                            <p class="font-medium">Қызметкер</p>
-                            <p class="text-xs text-gray-500">Инженер</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-2">Асқар Жанғалиев, инженер-құрылысшы</p>
-                    <p class="text-xs text-gray-400">3 күн бұрын</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center">
-                            <i class="fas fa-building"></i>
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="h-12 w-12 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" class="h-full w-full">
+                                <rect width="100" height="100" rx="20" fill="#f59e0b"/>
+                                <path d="M20 70 V40 L50 20 L80 40 V70 H60 V50 H40 V70 H20 Z" fill="white"/>
+                                <text x="50%" y="88%" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold">BTS</text>
+                            </svg>
                         </div>
-                        <span class="text-xl font-bold">Бадам Тас Строй</span>
+                        <h2 class="text-xl font-bold">Бадам Тас Строй</h2>
                     </div>
-                    <p class="text-gray-400">Қазақстанның жетекші құрылыс компаниясы. 15 жылдан астам тәжірибе.</p>
+                    <p class="text-gray-400 mt-2">Құрылыс саласындағы сенімді серіктес</p>
                 </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Компания</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Біз туралы</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Команда</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Жобалар</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Мәртебелер</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Қызметтер</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Тұрғын үй құрылысы</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Коммерциялық құрылыс</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Жол құрылысы</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Жобалау</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Байланыс</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-map-marker-alt text-gray-400"></i>
-                            <span class="text-gray-400">Шымкент, Арғынбеков көш. 52</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-phone text-gray-400"></i>
-                            <span class="text-gray-400">+7 707 532 6951</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-envelope text-gray-400"></i>
-                            <span class="text-gray-400">info@bdamtas.kz</span>
-                        </li>
-                    </ul>
+                <div class="flex flex-col md:flex-row md:space-x-8 space-y-4 md:space-y-0">
+                    <div>
+                        <h3 class="font-semibold mb-2">Байланыс</h3>
+                        <p class="text-gray-400">info@bdamtas.kz</p>
+                        <p class="text-gray-400">+7 (707) 532 69 51</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Мекен-жай</h3>
+                        <p class="text-gray-400">Шымкент қ., Алтынқорған көш., 12</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 mb-4 md:mb-0">© 2025 Бадам Тас Строй. Барлық құқықтар қорғалған.</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
-                </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2025 Бадам Тас Строй. Барлық құқықтар қорғалған.</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-amber-500 text-white p-3 rounded-full shadow-lg hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
-        // Budget Chart
-        const budgetCtx = document.getElementById('budgetChart').getContext('2d');
-        const budgetChart = new Chart(budgetCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Қаңтар', 'Ақпан', 'Наурыз', 'Сәуір', 'Мамыр', 'Маусым'],
-                datasets: [
-                    {
-                        label: 'Жоспарланған',
-                        data: [45, 60, 55, 70, 65, 80],
-                        backgroundColor: 'rgba(249, 115, 22, 0.7)',
-                        borderColor: 'rgba(249, 115, 22, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Нақты',
-                        data: [40, 55, 50, 65, 60, 75],
-                        backgroundColor: 'rgba(16, 185, 129, 0.7)',
-                        borderColor: 'rgba(16, 185, 129, 1)',
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return value + 'M';
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ₸' + context.raw + 'M';
-                            }
-                        }
-                    }
-                }
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
             }
         });
         
-        // Project cards hover effect
-        const projectCards = document.querySelectorAll('.project-card');
-        projectCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-5px)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = '';
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
         
-        // Stat cards hover effect
-        const statCards = document.querySelectorAll('.stat-card');
-        statCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-3px)';
-                card.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
-            });
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
             
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = '';
-                card.style.boxShadow = '';
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            // For this example, we'll just show an alert
+            alert(`Рақмет сізге, ${name}! Хабарламаңыз қабылданды. Біз сізге жақын арада жауап береміз.`);
+            
+            // Reset form
+            contactForm.reset();
+        });
+        
+        // Add animation to project cards on scroll
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('floating');
+                    observer.unobserve(entry.target);
+                }
             });
+        }, { threshold: 0.1 });
+        
+        projectCards.forEach(card => {
+            observer.observe(card);
         });
     </script>
 </body>
