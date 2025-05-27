@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бадам Тас Строй | Құрылыс компаниясы</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="website icon" type="png" href="icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #f59e0b;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+        }
+        
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="fixed w-full bg-white shadow-md z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="h-12 w-12 mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" class="h-full w-full">
+                        <rect width="100" height="100" rx="20" fill="#f59e0b"/>
+                        <path d="M20 70 V40 L50 20 L80 40 V70 H60 V50 H40 V70 H20 Z" fill="white"/>
+                        <text x="50%" y="88%" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold">BTS</text>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-gray-800">Бадам Тас Строй</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a data-i18n="header.mainPage" href="#home" class="nav-link text-gray-700 hover:text-amber-500">Басты бет</a>
+                <a data-i18n="about.title" href="#about" class="nav-link text-gray-700 hover:text-amber-500">Компания туралы</a>
+                <a data-i18n="header.servicesPage" href="#services" class="nav-link text-gray-700 hover:text-amber-500">Қызметтер</a>
+                <a data-i18n="buttons.projects" href="#projects" class="nav-link text-gray-700 hover:text-amber-500">Жобалар</a>
+                <a data-i18n="buttons.contact" href="#contact" class="nav-link text-gray-700 hover:text-amber-500">Байланыс</a>
+                <div class="flex items-center space-x-2 ml-4">
+                    <button onclick="setLanguage('kk')">
+                        <img src="https://flagcdn.com/w40/kz.png" alt="KZ" class="w-8 h-6 hover:ring-2 hover:ring-amber-500 rounded-sm">
+                    </button>
+                    <button onclick="setLanguage('ru')">
+                        <img src="https://flagcdn.com/w40/ru.png" alt="RU" class="w-8 h-6 hover:ring-2 hover:ring-amber-500 rounded-sm">
+                    </button>
+                </div>
+            </nav>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 px-4 shadow-lg">
+            <a data-i18n="header.mainPage" href="#home" class="block py-2 text-gray-700 hover:text-amber-500">Басты бет</a>
+            <a data-i18n="about.title" href="#about" class="block py-2 text-gray-700 hover:text-amber-500">Компания туралы</a>
+            <a data-i18n="services.title" href="#services" class="block py-2 text-gray-700 hover:text-amber-500">Қызметтер</a>
+            <a data-i18n="buttons.projects" href="#projects" class="block py-2 text-gray-700 hover:text-amber-500">Жобалар</a>
+            <a data-i18n="buttons.contact" href="#contact" class="block py-2 text-gray-700 hover:text-amber-500">Байланыс</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero pt-24 pb-32 text-white flex items-center">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-bounce">Бадам Тас Строй</h1>
+            <p data-i18n="hero.subtitle" class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Қазақстандағы сенімді құрылыс компаниясы</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a data-i18n="buttons.contact" href="#contact" class="btn-primary bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-lg">Байланыс</a>
+                <a data-i18n="buttons.projects" href="#projects" class="btn-primary bg-transparent hover:bg-white hover:text-gray-800 border-2 border-white text-white font-bold py-3 px-6 rounded-lg">Жобалар</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 data-i18n="about.title" class="text-3xl font-bold text-gray-800 mb-4">Компания туралы</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Бадам Тас Строй командасы" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h3 data-i18n="about.subtitle" class="text-2xl font-semibold text-gray-800 mb-4">Біз туралы</h3>
+                    <p data-i18n="about.description" class="text-gray-600 mb-4">Бадам Тас Строй - 2010 жылдан бері құрылыс саласында сенімді қызмет көрсетіп келе жатқан компания. Біздің мақсатымыз - клиенттерімізге жоғары сапалы құрылыс жұмыстарын ұсыну.</p>
+                    <p data-i18n="about.description2" class="text-gray-600 mb-6">Компаниямызда 100-ден астам білікті мамандар жұмыс істейді. Біз өз жобаларымызда заманауи технологияларды қолданамыз және халықаралық стандарттарға сәйкес жұмыс істейміз.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <div class="text-amber-500 text-2xl mb-2">
+                                <i class="fas fa-hard-hat"></i>
+                            </div>
+                            <h4 data-i18n="about.experience" class="font-semibold text-gray-800">10+ жыл</h4>
+                            <p data-i18n="about.experienceDescription" class="text-gray-600 text-sm">Тәжірибе</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <div class="text-amber-500 text-2xl mb-2">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h4 data-i18n="about.projects" class="font-semibold text-gray-800">50+ жоба</h4>
+                            <p data-i18n="about.projectsDescription" class="text-gray-600 text-sm">Аяқталды</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 data-i18n="services.title" class="text-3xl font-bold text-gray-800 mb-4">Қызметтер</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-amber-500 text-4xl mb-4">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 data-i18n="services.service1" class="text-xl font-semibold text-gray-800 mb-3">Тұрғын үй құрылысы</h3>
+                    <p data-i18n="services.service1Description" class="text-gray-600">Біз көпқабатты тұрғын үйлердің құрылысын жоғары сапалы материалдармен және заманауи технологияларды қолданып жүргіземіз.</p>
+                </div>
+                <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-amber-500 text-4xl mb-4">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 data-i18n="services.service2" class="text-xl font-semibold text-gray-800 mb-3">Өнеркәсіптік құрылыс</h3>
+                    <p data-i18n="services.service2Description" class="text-gray-600">Өнеркәсіптік кешендердің, цехтардың және өндіріс орындарының құрылысын жүргіземіз.</p>
+                </div>
+                <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-amber-500 text-4xl mb-4">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h3 data-i18n="services.service3" class="text-xl font-semibold text-gray-800 mb-3">Жол құрылысы</h3>
+                    <p data-i18n="services.service3Description" class="text-gray-600">Қалалық және ауылдық жолдардың құрылысын, сондай-ақ автомагистральдардың салынысын жүргіземіз.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 data-i18n="projects.title" class="text-3xl font-bold text-gray-800 mb-4">Жобаларымыз</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="project-card rounded-lg overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Жоба 1" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 data-i18n="projects.project1" class="text-xl font-semibold text-gray-800 mb-2">Астана Тұрғын үй кешені</h3>
+                        <p data-i18n="projects.project1Description" class="text-gray-600 mb-3">Астана қаласындағы 12 қабатты тұрғын үй кешенінің құрылысы</p>
+                        <a data-i18n="projects.projectLink" href="#" class="text-amber-500 font-medium hover:text-amber-600">Толығырақ <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+                <div class="project-card rounded-lg overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Жоба 2" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 data-i18n="projects.project2" class="text-xl font-semibold text-gray-800 mb-2">Алматы Бизнес орталығы</h3>
+                        <p data-i18n="projects.project2Description" class="text-gray-600 mb-3">Алматы қаласындағы 20 қабатты бизнес орталығының құрылысы</p>
+                        <a data-i18n="projects.projectLink" href="#" class="text-amber-500 font-medium hover:text-amber-600">Толығырақ <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+                <div class="project-card rounded-lg overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Жоба 3" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 data-i18n="projects.project3" class="text-xl font-semibold text-gray-800 mb-2">Шымкент Автомагистраль</h3>
+                        <p data-i18n="projects.project3Description" class="text-gray-600 mb-3">Шымкент қаласындағы 15 км автомагистральдың салынысы</p>
+                        <a data-i18n="projects.projectLink" href="#" class="text-amber-500 font-medium hover:text-amber-600">Толығырақ <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a data-i18n="buttons.projects" href="#" class="btn-primary inline-block bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-lg">Барлық жобалар</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 data-i18n="testimonials.title" class="text-3xl font-bold text-gray-800 mb-4">Клиенттер пікірі</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-xl mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p data-i18n="testimonials.testimonial1" class="text-gray-600 mb-4">"Бадам Тас Строй компаниясымен жұмыс істегеніме өте қуаныштымын. Жоба уақытында аяқталды және барлық стандарттар сақталды."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Клиент" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 data-i18n="testimonials.client1" class="font-semibold text-gray-800">Асқар Жұмабаев</h4>
+                            <p data-i18n="testimonials.position1" class="text-gray-500 text-sm">Астана ЖШС директоры</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-xl mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p data-i18n="testimonials.testimonial2" class="text-gray-600 mb-4">"Біздің бизнес орталығымыздың құрылысын өте сапалы орындады. Команда кәсіби және жоғары деңгейдегі қызмет көрсетті."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Клиент" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 data-i18n="testimonials.client2" class="font-semibold text-gray-800">Айгүл Нұрланова</h4>
+                            <p data-i18n="testimonials.position2" class="text-gray-500 text-sm">Алматы Бизнес Орталығы</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-xl mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p data-i18n="testimonials.testimonial3" class="text-gray-600 mb-4">"Автомагистраль жобасын уақытылы және бюджет шегінде аяқтады. Жолдың сапасы өте жоғары, 2 жылдан бері ешқандай проблемалар жоқ."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Клиент" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 data-i18n="testimonials.client3" class="font-semibold text-gray-800">Берик Төлегенов</h4>
+                            <p data-i18n="testimonials.position3" class="text-gray-500 text-sm">Шымкент Әкімдігі</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 data-i18n="contact.title" class="text-3xl font-bold text-gray-800 mb-4">Байланыс</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <h3 data-i18n="contact.subtitle" class="text-2xl font-semibold text-gray-800 mb-4">Бізбен байланысыңыз</h3>
+                    <p data-i18n="contact.description" class="text-gray-600 mb-6">Кез келген сұрақтар бойынша бізге хабарласыңыз. Біз сізге жақын арада жауап береміз.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="text-amber-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 data-i18n="contact.address" class="font-semibold text-gray-800">Мекен-жайы</h4>
+                                <p data-i18n="contact.location" class="text-gray-600">Шымкент қ., Алтынқорған көш., 12</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-amber-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Телефон</h4>
+                                <p class="text-gray-600">+7 (707) 532 69 51</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-amber-500 text-xl mr-4 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 data-i18n="contact.email" class="font-semibold text-gray-800">Электронды пошта</h4>
+                                <p class="text-gray-600">info@bdamtas.kz</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 data-i18n="contact.social" class="font-semibold text-gray-800 mb-3">Әлеуметтік желілердегі парақшаларымыз</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-600 hover:text-amber-500 text-2xl"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-amber-500 text-2xl"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-amber-500 text-2xl"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-amber-500 text-2xl"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <form id="contact-form" class="bg-gray-100 p-6 rounded-lg">
+                        <div class="mb-4">
+                            <label data-i18n="contact.name" for="name" class="block text-gray-700 font-medium mb-2">Аты-жөніңіз</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div class="mb-4">
+                            <label data-i18n="contact.email" for="email" class="block text-gray-700 font-medium mb-2">Электронды пошта</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div class="mb-4">
+                            <label data-i18n="contact.phoneNumber" for="phone" class="block text-gray-700 font-medium mb-2">Телефон нөмірі</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div class="mb-4">
+                            <label data-i18n="contact.message" for="message" class="block text-gray-700 font-medium mb-2">Хабарлама</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                        </div>
+                        <button data-i18n="contact.send" type="submit" class="btn-primary w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-lg">Хабарлама жіберу</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="h-12 w-12 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" class="h-full w-full">
+                                <rect width="100" height="100" rx="20" fill="#f59e0b"/>
+                                <path d="M20 70 V40 L50 20 L80 40 V70 H60 V50 H40 V70 H20 Z" fill="white"/>
+                                <text x="50%" y="88%" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold">BTS</text>
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-bold">Бадам Тас Строй</h2>
+                    </div>
+                    <p data-i18n="footer.description" class="text-gray-400 mt-2">Құрылыс саласындағы сенімді серіктес</p>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-8 space-y-4 md:space-y-0">
+                    <div>
+                        <h3 data-i18n="contact.title" class="font-semibold mb-2">Байланыс</h3>
+                        <p class="text-gray-400">info@bdamtas.kz</p>
+                        <p class="text-gray-400">+7 (707) 532 69 51</p>
+                    </div>
+                    <div>
+                        <h3 data-i18n="contact.address" class="font-semibold mb-2">Мекен-жай</h3>
+                        <p data-i18n="contact.location" class="text-gray-400">Шымкент қ., Алтынқорған көш., 12</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p data-i18n="footer.copyright">&copy; 2025 Бадам Тас Строй. Барлық құқықтар қорғалған.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-amber-500 text-white p-3 rounded-full shadow-lg hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            // For this example, we'll just show an alert
+            alert(`Рақмет сізге, ${name}! Хабарламаңыз қабылданды. Біз сізге жақын арада жауап береміз.`);
+            
+            // Reset form
+            contactForm.reset();
+        });
+        
+        // Add animation to project cards on scroll
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('floating');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        projectCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Translations
+        const translations = {
+            kk: {
+                "hero.title": "Бадам Тас Строй",
+                "hero.subtitle": "Қазақстандағы сенімді құрылыс компаниясы",
+                "buttons.contact": "Байланыс",
+                "buttons.projects": "Жобалар",
+                "header.mainPage": "Басты бет",
+                "header.servicesPage": "Қызметтер",
+                "about.title": "Компания туралы",
+                "about.subtitle": "Біз туралы",
+                "about.description": "Бадам Тас Строй - 2010 жылдан бері құрылыс саласында сенімді қызмет көрсетіп келе жатқан компания. Біздің мақсатымыз - клиенттерімізге жоғары сапалы құрылыс жұмыстарын ұсыну.",
+                "about.description2": "Компаниямызда 100-ден астам білікті мамандар жұмыс істейді. Біз өз жобаларымызда заманауи технологияларды қолданамыз және халықаралық стандарттарға сәйкес жұмыс істейміз.",
+                "about.experience": "10+ жыл",
+                "about.experienceDescription": "Тәжірибе",
+                "about.projects": "50+ жоба",
+                "about.projectsDescription": "Аяқталды",
+                "services.title": "Қызметтер",
+                "services.service1": "Тұрғын үй құрылысы",
+                "services.service1Description": "Біз көпқабатты тұрғын үйлердің құрылысын жоғары сапалы материалдармен және заманауи технологияларды қолданып жүргіземіз.",
+                "services.service2": "Өнеркәсіптік құрылыс",
+                "services.service2Description": "Өнеркәсіптік кешендердің, цехтардың және өндіріс орындарының құрылысын жүргіземіз.",
+                "services.service3": "Жол құрылысы",
+                "services.service3Description": "Қалалық және ауылдық жолдардың құрылысын, сондай-ақ автомагистральдардың салынысын жүргіземіз.",
+                "projects.title": "Жобаларымыз",
+                "projects.project1": "Астана Тұрғын үй кешені",
+                "projects.project1Description": "Астана қаласындағы 12 қабатты тұрғын үй кешенінің құрылысы",
+                "projects.projectLink": "Толығырақ",
+                "projects.project2": "Алматы Бизнес орталығы",
+                "projects.project2Description": "Алматы қаласындағы 20 қабатты бизнес орталығының құрылысы",
+                "projects.project3": "Шымкент Автомагистраль",
+                "projects.project3Description": "Шымкент қаласындағы 15 км автомагистральдың салынысы",
+                "buttons.projects": "Барлық жобалар",
+                "testimonials.title": "Клиенттер пікірі",
+                "testimonials.testimonial1": "«Бадам Тас Строй компаниясымен жұмыс істегеніме өте қуаныштымын. Жоба уақытында аяқталды және барлық стандарттар сақталды.»",
+                "testimonials.client1": "Асқар Жұмабаев",
+                "testimonials.position1": "Астана ЖШС директоры",
+                "testimonials.testimonial2": "«Біздің бизнес орталығымыздың құрылысын өте сапалы орындады. Команда кәсіби және жоғары деңгейдегі қызмет көрсетті.»",
+                "testimonials.client2": "Айгүл Нұрланова",
+                "testimonials.position2": "Алматы Бизнес Орталығы",
+                "testimonials.testimonial3": "«Автомагистраль жобасын уақытылы және бюджет шегінде аяқтады. Жолдың сапасы өте жоғары, 2 жылдан бері ешқандай проблемалар жоқ.»",
+                "testimonials.client3": "Берик Төлегенов",
+                "testimonials.position3": "Шымкент Әкімдігі",
+                "footer.description": "Құрылыс саласындағы сенімді серіктес",
+                "footer.copyright": "&copy; 2025 Бадам Тас Строй. Барлық құқықтар қорғалған."
+            },
+            ru: {
+                "hero.title": "Бадам Тас Строй",
+                "hero.subtitle": "Надежная строительная компания в Казахстане",
+                "buttons.contact": "Контакты",
+                "buttons.projects": "Проекты",
+                "header.mainPage": "Главная страница",
+                "header.servicesPage": "Услуги",
+                "about.title": "О компании",
+                "about.subtitle": "О нас",
+                "about.description": "Бадам Тас Строй — компания, которая предоставляет надежные услуги в строительной отрасли с 2010 года. Наша цель — предоставить нашим клиентам высококачественные строительные работы.",
+                "about.description2": "В нашей компании работают более 100 квалифицированных специалистов. Мы используем в своих проектах современные технологии и работаем в соответствии с международными стандартами.",
+                "about.experience": "10+ лет",
+                "about.experienceDescription": "Опыт",
+                "about.projects": "50+ проектов",
+                "about.projectsDescription": "Выполнено",
+                "services.title": "Услуги",
+                "services.service1": "Строительство домов",
+                "services.service1Description": "Мы осуществляем строительство многоэтажных жилых домов с использованием качественных материалов и современных технологий.",
+                "services.service2": "Строительство зданий",
+                "services.service2Description": "Мы осуществляем строительство промышленных комплексов, цехов и производственных помещений.",
+                "services.service3": "Строительство дорог",
+                "services.service3Description": "Мы осуществляем строительство городских и сельских дорог, а также автомагистралей.",
+                "projects.title": "Проекты",
+                "projects.project1": "Строительство дома в Астане",
+                "projects.project1Description": "Строительство 12-этажного жилого комплекса в г. Астана",
+                "projects.projectLink": "Читать далее",
+                "projects.project2": "Алматы Бизнес Центр",
+                "projects.project2Description": "Строительство 20-этажного бизнес-центра в г. Алматы",
+                "projects.project3": "Шымкент Автомагистраль",
+                "projects.project3Description": "Строительство 15 км автодороги в г. Шымкент",
+                "buttons.projects": "Все проекты",
+                "testimonials.title": "Отзывы клиентов",
+                "testimonials.testimonial1": "«Я очень рад работать с Бадам Тас Строй. Проект был завершен в срок и соблюдены все стандарты».",
+                "testimonials.client1": "Аскар Жумабаев",
+                "testimonials.position1": "Директор ТОО Астана",
+                "testimonials.testimonial2": "«Строительство нашего бизнес-центра было выполнено с превосходным качеством. Команда предоставила профессиональный и высокоуровневый сервис».",
+                "testimonials.client2": "Айгуль Нурланова",
+                "testimonials.position2": "Алматы Бизнес Центр",
+                "testimonials.testimonial3": "«Проект строительства автомагистрали был завершен в срок и в рамках бюджета. Качество дороги очень высокое, никаких проблем за 2 года».",
+                "testimonials.client3": "Берик Толегенов",
+                "testimonials.position3": "Администрация города Шымкента",
+                "footer.description": "Надежный партнер в сфере строительства",
+                "footer.copyright": "&copy; 2025 Бадам Тас Строй. Все права защищены."
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem("lang", lang);
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+        // Сайт жүктелгенде соңғы таңдалған тілді қолдану
+        document.addEventListener("DOMContentLoaded", () => {
+            const lang = localStorage.getItem("lang") || "kk";
+            setLanguage(lang);
+        });
+    </script>
+</body>
+</html>
